@@ -1,38 +1,25 @@
 'use client';
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { MapPin, Phone, FileText } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Send, MapPin, Phone, FileText, Bot, Sparkles, User, Loader2, Menu, Building2, Layers } from "lucide-react";
 
-// High-quality Infinite Scrolling Column (Brightened for Agency)
-const MediaColumn = ({ images, speed, direction = 1 }: { images: string[], speed: number, direction?: number }) => {
+// Responsive Image Column (Agency Background)
+const ImageColumn = ({ images, speed, direction = 1, mobileHidden = false }: { images: string[], speed: number, direction?: number, mobileHidden?: boolean }) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "4rem" }}>
+    <div className={`video-column ${mobileHidden ? 'mobile-hidden' : ''}`} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
       <motion.div 
-        animate={{ 
-          y: direction > 0 ? [0, -1800] : [-1800, 0] 
-        }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: speed, 
-          ease: "linear" 
-        }}
-        style={{ display: "flex", flexDirection: "column", gap: "4rem" }}
+        animate={{ y: direction > 0 ? [0, -1800] : [-1800, 0] }}
+        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
+        style={{ display: "flex", flexDirection: "column", gap: "1.5rem", willChange: "transform" }}
       >
         {[...images, ...images, ...images].map((src, i) => (
-          <div key={i} style={{ 
-            position: "relative", 
-            width: "420px", 
-            height: "580px", 
-            borderRadius: "32px", 
-            overflow: "hidden",
-            boxShadow: "0 40px 80px rgba(0,0,0,0.6)",
-            backgroundColor: "#111",
-            border: "1px solid rgba(212,175,55,0.2)", 
-            opacity: 0.55, 
-            filter: "saturate(1.1) brightness(1.1)" 
+          <div key={i} className="video-item" style={{ 
+            position: "relative", borderRadius: "20px", overflow: "hidden",
+            boxShadow: "0 15px 30px rgba(0,0,0,0.5)", backgroundColor: "#000",
+            border: "1px solid rgba(255,255,255,0.05)", opacity: 0.4, transform: "translateZ(0)"
           }}>
-            <Image src={src} alt="Agency Solution" fill style={{ objectFit: "cover" }} />
+            <img src={src} alt="agency work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
         ))}
       </motion.div>
@@ -41,203 +28,140 @@ const MediaColumn = ({ images, speed, direction = 1 }: { images: string[], speed
 };
 
 export default function Home() {
-  const agencyImages = [
-    "/work/agency1.jpg",
-    "/work/agency2.jpg",
-    "/work/agency3.jpg",
-    "/work/agency4.jpg",
-    "/work/agency5.jpg",
-  ];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChatActive, setIsChatActive] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const FORMSPREE_URL = "https://formspree.io/f/xzdoearv";
+
+  const images = ["/work/agency1.jpg", "/work/agency2.jpg", "/work/agency3.jpg", "/work/agency4.jpg"];
+
+  const handleChatSubmit = async (e: any) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+      });
+      if (response.ok) {
+        setIsSuccess(true);
+        setTimeout(() => { setIsSuccess(false); setIsChatActive(false); }, 5000);
+      }
+    } catch (error) { alert("오류 발생"); }
+    finally { setIsSubmitting(false); }
+  };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", background: "#050505", color: "#ffffff", overflow: "hidden" }}>
+    <div style={{ position: "relative", minHeight: "100vh", background: "#050505", color: "#fff", overflowX: "hidden" }}>
       
-      {/* 1. Enhanced Agency Wall Background */}
-      <div style={{ 
-        position: "fixed", 
-        top: "-15%", 
-        left: "-10%", 
-        width: "120%", 
-        height: "130%", 
-        display: "flex", 
-        justifyContent: "center", 
-        gap: "6rem", 
-        zIndex: 0,
-        pointerEvents: "none",
-        transform: "rotate(-8deg) scale(1.15)"
-      }}>
-        <MediaColumn images={agencyImages} speed={65} direction={1} />
-        <MediaColumn images={agencyImages} speed={90} direction={-1} />
-        <MediaColumn images={agencyImages} speed={55} direction={1} />
-        <MediaColumn images={agencyImages} speed={80} direction={-1} />
+      {/* 1. Background */}
+      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", gap: "1rem", zIndex: 0, pointerEvents: "none" }}>
+        <ImageColumn images={images} speed={60} direction={1} />
+        <ImageColumn images={images} speed={90} direction={-1} mobileHidden />
       </div>
+      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(5,5,5,0.95) 100%)", zIndex: 1 }} />
 
-      <div style={{ 
-        position: "fixed", 
-        top: 0, 
-        left: 0, 
-        width: "100%", 
-        height: "100%", 
-        background: "radial-gradient(circle at center, rgba(5,5,5,0.1) 0%, rgba(5,5,5,0.85) 100%)",
-        zIndex: 1 
-      }} />
-
-      {/* 2. Agency Content Layer */}
+      {/* 2. Content */}
       <div style={{ position: "relative", zIndex: 10 }}>
         {/* Navigation */}
-        <nav style={{ 
-          padding: "3.5rem 4rem", 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "center" 
-        }}>
-          <div style={{ fontSize: "2rem", fontWeight: "900", fontFamily: "var(--font-serif)", letterSpacing: "0.25em" }}>
-            NADOO <span style={{ color: "#d4af37" }}>AGENCY</span>
+        <nav style={{ padding: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1400px", margin: "0 auto" }}>
+          <div style={{ fontSize: "1.3rem", fontWeight: "950", fontFamily: "var(--font-serif)", letterSpacing: "0.15em" }}>
+            NADOO <span style={{ color: "var(--primary)" }}>AGENCY</span>
           </div>
-          <div style={{ display: "flex", gap: "4rem", fontSize: "0.95rem", fontWeight: "700", letterSpacing: "0.15em", color: "#d4af37" }}>
-            <a>SERVICES</a>
-            <a>PROCESS</a>
-            <a>CONTACT</a>
-            <button className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>CONSULTING</button>
+          <div className="desktop-only" style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
+            <a style={{ fontWeight: "700" }}>SERVICES</a>
+            <a style={{ fontWeight: "700" }}>PORTFOLIO</a>
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "0.7rem 1.8rem" }}>CONTACT US</button>
           </div>
+          <button className="mobile-only" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ background: "none", border: "none", color: "var(--primary)" }}>
+            <Menu size={28} />
+          </button>
         </nav>
 
-        {/* Hero Section */}
-        <main className="container" style={{ paddingTop: "12rem", textAlign: "center" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span style={{ 
-              fontFamily: "var(--font-handwriting)", 
-              fontSize: "3.2rem", 
-              color: "#d4af37", 
-              marginBottom: "2.5rem", 
-              display: "block",
-              transform: "rotate(-2deg)"
-            }}>
-              아이디어는 말로, 결과는 완성으로!
-            </span>
-            
+        {/* Hero */}
+        <main className="container" style={{ paddingTop: "6rem", paddingBottom: "8rem", textAlign: "center" }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 style={{ 
-              fontFamily: "var(--font-serif)", 
-              fontSize: "8.5rem", 
-              fontWeight: "400", 
-              lineHeight: 0.95, 
-              marginBottom: "4.5rem",
-              letterSpacing: "-0.03em",
-              textShadow: "0 0 40px rgba(0,0,0,0.8)"
+              fontFamily: "var(--font-serif)", fontSize: "clamp(2.8rem, 8vw, 7.5rem)", 
+              fontWeight: "900", lineHeight: 1.1, marginBottom: "3rem", wordBreak: "keep-all" 
             }}>
-              말로 일시키는 시대 <br />
-              <span style={{ fontStyle: "italic", color: "#d4af37" }}>AI 비즈니스 파트너</span>
+              AI로 완성하는 <br /> <span style={{ color: "var(--primary)" }}>비즈니스 자동화</span>
             </h1>
-            
             <p style={{ 
-              fontSize: "1.6rem", 
-              color: "#e0e0e0", 
-              maxWidth: "900px", 
-              margin: "2rem auto 7rem", 
-              lineHeight: "1.8",
-              fontWeight: "400",
-              textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
+              fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "#aaa", maxWidth: "750px", 
+              margin: "0 auto 4rem", lineHeight: "1.6", wordBreak: "keep-all", padding: "0 1.5rem" 
             }}>
-              당신의 목소리가 곧 완벽한 결과물로 이어집니다. <br />
-              시간은 절약하고, 가치는 더 높이세요. 나도 AI가 당신의 비즈니스를 빛냅니다.
+              단순한 도구를 넘어, 비즈니스의 성장 엔진이 됩니다. <br /> 나두 AI 에이전시의 전담 팀이 귀하의 비즈니스를 24시간 가동시켜 드립니다.
             </p>
-            
-            <div style={{ display: "flex", justifyContent: "center", gap: "3rem" }}>
-              <button className="btn-primary" style={{ padding: "1.5rem 4.5rem", fontSize: "1.2rem" }}>
-                프로젝트 시작하기
-              </button>
-              <button style={{ 
-                background: "rgba(255,255,255,0.05)", 
-                backdropFilter: "blur(10px)",
-                border: "1px solid rgba(212,175,55,0.6)", 
-                color: "#d4af37",
-                padding: "1.5rem 4rem", 
-                borderRadius: "999px", 
-                fontWeight: "700",
-                fontSize: "1.2rem" 
-              }}>
-                포트폴리오 보기
-              </button>
-            </div>
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "1.4rem 3.5rem" }}>전략 컨설팅 신청</button>
           </motion.div>
 
-          {/* Core Solutions */}
-          <section style={{ marginTop: "25rem", paddingBottom: "15rem" }}>
-            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "4.5rem", marginBottom: "7rem", textAlign: "center" }}>
-              Premium AI Solutions
-            </h2>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "repeat(3, 1fr)", 
-              gap: "3.5rem" 
-            }}>
+          {/* Solutions */}
+          <section style={{ marginTop: "10rem" }}>
+            <div className="feature-grid">
               {[
-                { title: "3D 홈페이지 제작", desc: "강렬한 첫인상과 압도적인 몰입감의 3D 웹사이트를 제작합니다." },
-                { title: "맞춤형 AI 개발", desc: "비즈니스 특성에 최적화된 지능형 AI 솔루션을 구축합니다." },
-                { title: "올인원 마케팅", desc: "기획부터 디자인, 자동화까지 말 한마디로 완성합니다." }
-              ].map((service, i) => (
-                <motion.div 
-                  key={i}
-                  className="glass-card"
-                  whileHover={{ y: -15, borderColor: "rgba(212,175,55,0.5)" }}
-                  style={{ background: "rgba(10,10,10,0.6)" }}
-                >
-                  <div style={{ fontFamily: "var(--font-handwriting)", fontSize: "2.2rem", color: "#d4af37", marginBottom: "1.5rem" }}>
-                    Solution 0{i+1}
-                  </div>
-                  <h3 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "2rem", color: "#fff" }}>{service.title}</h3>
-                  <p style={{ color: "#c0c0c0", fontSize: "1.25rem", lineHeight: "1.8" }}>{service.desc}</p>
-                </motion.div>
+                { title: "전담 AI 팀 구축", desc: "고객님의 비즈니스에 최적화된 AI 팀원을 배치합니다." },
+                { title: "워크플로우 최적화", desc: "불필요한 반복 업무를 AI가 대신 처리하도록 설계합니다." },
+                { title: "디지털 마케팅 자동화", desc: "콘텐츠 생성부터 배포까지 AI가 스스로 관리합니다." }
+              ].map((feature, i) => (
+                <div key={i} className="video-card" style={{ padding: "3.5rem 2rem", textAlign: "left", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div style={{ color: "var(--primary)", fontWeight: "900", fontSize: "1rem", marginBottom: "1rem" }}>SOLUTION 0{i+1}</div>
+                  <h3 style={{ fontSize: "1.8rem", fontWeight: "900", marginBottom: "1.2rem", wordBreak: "keep-all" }}>{feature.title}</h3>
+                  <p style={{ color: "#888", fontSize: "1.1rem", lineHeight: "1.7", wordBreak: "keep-all" }}>{feature.desc}</p>
+                </div>
               ))}
+            </div>
+
+            {/* Slogan */}
+            <div style={{ marginTop: "12rem", marginBottom: "10rem", textAlign: "center" }}>
+              <div style={{ 
+                fontFamily: "var(--font-handwriting)", fontSize: "clamp(2.5rem, 7vw, 6.5rem)", 
+                color: "var(--primary)", marginBottom: "1.5rem", wordBreak: "keep-all", padding: "0 1.5rem", lineHeight: "1.3"
+              }}>
+                "당신의 시간은 더 <br className="mobile-only" /> 가치 있는 곳에 쓰여야 합니다."
+              </div>
+              <p style={{ color: "#444", letterSpacing: "0.5em", fontSize: "0.9rem" }}>AI-DRIVEN BUSINESS GROWTH</p>
             </div>
           </section>
 
-          {/* Business Info Footer */}
-          <footer style={{ marginTop: "15rem", paddingBottom: "10rem", borderTop: "1px solid rgba(212,175,55,0.1)", paddingTop: "8rem" }}>
-            <div style={{ maxWidth: "1000px", margin: "0 auto", textAlign: "left" }}>
-              <div style={{ fontSize: "2.5rem", fontWeight: "900", marginBottom: "3rem", fontFamily: "var(--font-serif)", color: "#d4af37" }}>
-                NADOO_AI
+          {/* Chatbot */}
+          <section style={{ marginTop: "5rem", marginBottom: "8rem" }}>
+            <div style={{ background: "rgba(204, 255, 0, 0.02)", padding: "4rem 1.5rem", borderRadius: "32px", border: "1px solid rgba(204, 255, 0, 0.15)", textAlign: "left", maxWidth: "800px", margin: "0 auto" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
+                <div style={{ padding: "0.8rem", background: "var(--primary)", borderRadius: "14px" }}><Bot size={32} color="#000" /></div>
+                <div><h3 style={{ fontSize: "1.6rem", fontWeight: "950" }}>에이전시 상담봇</h3><p style={{ color: "var(--primary)", fontWeight: "800", fontSize: "0.9rem" }}>비즈니스 프로세스 자동화 문의</p></div>
               </div>
-              
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "4rem", color: "#888", fontSize: "1.1rem", lineHeight: "2" }}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                    <MapPin size={18} color="#d4af37" />
-                    <span style={{ color: "#fff", fontWeight: "700" }}>LOCATION</span>
-                  </div>
-                  광주광역시 서구 상무중앙로 7, 5층 (치평동, 상무타워)
-                </div>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                    <Phone size={18} color="#d4af37" />
-                    <span style={{ color: "#fff", fontWeight: "700" }}>CONTACT</span>
-                  </div>
-                  대표번호: 010-4892-3376<br />
-                  이메일: nadoo_ai@naver.com
-                </div>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-                    <FileText size={18} color="#d4af37" />
-                    <span style={{ color: "#fff", fontWeight: "700" }}>BUSINESS INFO</span>
-                  </div>
-                  상호: 나두에이아이 | 대표자: 오민주<br />
-                  사업자등록번호: 434-40-01488
-                </div>
-                <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "flex-end" }}>
-                  <div style={{ textAlign: "right" }}>
-                    <p style={{ fontFamily: "var(--font-handwriting)", fontSize: "2.5rem", color: "#d4af37", marginBottom: "1rem" }}>
-                      "비즈니스의 가치를 AI로 완성합니다."
-                    </p>
-                    <div style={{ fontSize: "0.9rem", letterSpacing: "0.5em", color: "#444" }}>
-                      © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {!isChatActive && !isSuccess ? (
+                <button onClick={() => setIsChatActive(true)} className="btn-primary" style={{ width: "100%" }}>상담 신청서 작성</button>
+              ) : isSuccess ? (
+                <div style={{ background: "rgba(204, 255, 0, 0.05)", padding: "2rem", borderRadius: "20px", textAlign: "center" }}><h4>감사합니다! 곧 연락드릴게요. ✨</h4></div>
+              ) : (
+                <form onSubmit={handleChatSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" />
+                  <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" />
+                  <textarea name="message" placeholder="자동화가 필요한 업무를 적어주세요." rows={3} required className="mobile-input-fix" style={{ resize: "none" }} />
+                  <button type="submit" disabled={isSubmitting} className="btn-primary">{isSubmitting ? "전송 중..." : "프로젝트 의뢰 전송"}</button>
+                </form>
+              )}
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer style={{ marginTop: "8rem", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "6rem", textAlign: "left" }}>
+            <div className="neon-text" style={{ fontSize: "2.5rem", fontWeight: "950", marginBottom: "3rem", fontFamily: "var(--font-serif)" }}>NADOO_AI</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+              <div><span style={{ fontWeight: "900", color: "var(--primary)" }}>LOCATION</span><p style={{ color: "#666", marginTop: "0.5rem" }}>광주광역시 서구 상무중앙로 7, 5층 (치평동, 상무타워)</p></div>
+              <div><span style={{ fontWeight: "900", color: "var(--primary)" }}>CONTACT</span><p style={{ color: "#666", marginTop: "0.5rem" }}>010-4892-3376 | nadoo_ai@naver.com</p></div>
+              <p style={{ color: "#444", fontSize: "0.9rem" }}>
+                상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488<br />
+                © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
+              </p>
             </div>
           </footer>
         </main>
