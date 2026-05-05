@@ -214,7 +214,7 @@ export default function Home() {
               </div>
               <div style={{ minWidth: "280px" }}>
                 <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1.5rem" }}>CONTACT</span>
-                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
+                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo3379@gmail.com</p>
               </div>
             </div>
 
