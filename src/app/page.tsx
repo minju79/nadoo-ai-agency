@@ -198,27 +198,39 @@ export default function Home() {
           </section>
 
           {/* Footer */}
-          <footer style={{ marginTop: "20rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "10rem", textAlign: "left" }}>
-            <div className="neon-text" style={{ fontSize: "4rem", fontWeight: "950", marginBottom: "5rem", fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>NADOO_AI</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "5rem" }}>
-              <div>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.4rem", letterSpacing: "0.2em" }}>LOCATION</span>
-                <p style={{ color: "#aaa", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
+          <footer style={{ 
+            marginTop: "20rem", 
+            borderTop: "1px solid rgba(255,255,255,0.1)", 
+            paddingTop: "8rem", 
+            textAlign: "left",
+            background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))"
+          }}>
+            <div className="neon-text" style={{ fontSize: "3.5rem", fontWeight: "950", marginBottom: "4rem", fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>NADOO_AI</div>
+            
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6rem", marginBottom: "6rem" }}>
+              <div style={{ minWidth: "280px" }}>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1.5rem" }}>LOCATION</span>
+                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
               </div>
-              <div>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.4rem", letterSpacing: "0.2em" }}>CONTACT</span>
-                <p style={{ color: "#aaa", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
+              <div style={{ minWidth: "280px" }}>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1.5rem" }}>CONTACT</span>
+                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
               </div>
             </div>
-            <div style={{ marginTop: "8rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", paddingBottom: "5rem" }}>
-              <p style={{ color: "#666", fontSize: "1.1rem", lineHeight: "1.8" }}>
-                상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488<br />
-                © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
-              </p>
-              <div style={{ display: "flex", gap: "2.5rem", color: "#888", fontWeight: "700" }}>
-                <a className="nav-link" style={{ fontSize: "1rem" }}>INSTAGRAM</a>
-                <a className="nav-link" style={{ fontSize: "1rem" }}>BLOG</a>
-                <a className="nav-link" style={{ fontSize: "1rem" }}>YOUTUBE</a>
+
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "4rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "3rem", paddingBottom: "6rem" }}>
+              <div>
+                <p style={{ color: "#888", fontSize: "1rem", lineHeight: "1.8" }}>
+                  상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488
+                </p>
+                <p style={{ color: "#666", fontSize: "0.9rem", marginTop: "0.5rem" }}>
+                  © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: "3rem" }}>
+                <a className="nav-link" style={{ fontSize: "0.9rem" }}>INSTAGRAM</a>
+                <a className="nav-link" style={{ fontSize: "0.9rem" }}>BLOG</a>
+                <a className="nav-link" style={{ fontSize: "0.9rem" }}>YOUTUBE</a>
               </div>
             </div>
           </footer>
