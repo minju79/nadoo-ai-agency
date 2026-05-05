@@ -115,9 +115,9 @@ export default function Home() {
         {/* Hero Section */}
         <main className="container" style={{ paddingTop: "10rem", paddingBottom: "15rem", textAlign: "center" }}>
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>
-            <span className="neon-text" style={{ 
-              fontFamily: "var(--font-handwriting)", fontSize: "clamp(1.5rem, 4vw, 2.8rem)", 
-              marginBottom: "1.5rem", display: "block", transform: "rotate(-3deg)", fontStyle: "italic"
+            <span style={{ 
+              fontFamily: "var(--font-aesthetic)", fontSize: "clamp(1.2rem, 3vw, 2.2rem)", 
+              marginBottom: "2rem", display: "block", color: "var(--primary)", fontWeight: "400", letterSpacing: "0.1em"
             }}>
               비즈니스의 가치를 높이는 AI 솔루션
             </span>
@@ -131,44 +131,45 @@ export default function Home() {
             </h1>
             
             <p style={{ 
-              fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "#aaa", maxWidth: "850px", 
-              margin: "0 auto 5rem", lineHeight: "1.8", wordBreak: "keep-all", fontWeight: "300"
+              fontSize: "clamp(0.9rem, 1.8vw, 1.2rem)", color: "#aaa", maxWidth: "750px", 
+              margin: "0 auto 5rem", lineHeight: "1.8", wordBreak: "keep-all", fontWeight: "300", fontFamily: "var(--font-aesthetic)"
             }}>
               단순한 도구를 넘어, 비즈니스의 성장 엔진이 됩니다. <br />
               나두 AI 에이전시의 전담 팀이 귀하의 비즈니스를 24시간 가동시켜 드립니다.
             </p>
             
-            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "1.8rem 5rem", fontSize: "1.3rem" }}>
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "1.5rem 4rem", fontSize: "1.1rem" }}>
               전략 컨설팅 신청하기
             </button>
           </motion.div>
 
           {/* Solutions Grid */}
-          <section id="services" style={{ marginTop: "20rem" }}>
-            <div className="feature-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "3rem" }}>
+          <section id="services" style={{ marginTop: "15rem" }}>
+            <div className="feature-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "2.5rem" }}>
               {[
                 { title: "전담 AI 팀 구축", desc: "고객님의 비즈니스에 최적화된 AI 팀원을 배치하여 업무 효율을 극대화합니다." },
                 { title: "워크플로우 최적화", desc: "불필요한 반복 업무를 AI가 대신 처리하도록 설계하여 핵심 가치에 집중하게 합니다." },
                 { title: "디지털 마케팅 자동화", desc: "콘텐츠 생성부터 배포, 분석까지 AI가 스스로 관리하여 성과를 창출합니다." }
               ].map((feature, i) => (
-                <div key={i} className="video-card" style={{ padding: "5rem 3rem", textAlign: "left", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}>
-                  <div style={{ color: "var(--primary)", fontWeight: "900", fontSize: "1.1rem", marginBottom: "1.5rem", letterSpacing: "0.2em" }}>SOLUTION 0{i+1}</div>
-                  <h3 style={{ fontSize: "2.2rem", fontWeight: "900", marginBottom: "1.5rem", wordBreak: "keep-all" }}>{feature.title}</h3>
-                  <p style={{ color: "#888", fontSize: "1.2rem", lineHeight: "1.8", wordBreak: "keep-all" }}>{feature.desc}</p>
+                <div key={i} className="video-card" style={{ padding: "4rem 2.5rem", textAlign: "left", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}>
+                  <div style={{ color: "var(--primary)", fontWeight: "900", fontSize: "1rem", marginBottom: "1.2rem", letterSpacing: "0.2em" }}>SOLUTION 0{i+1}</div>
+                  <h3 style={{ fontSize: "1.8rem", fontWeight: "900", marginBottom: "1.2rem", wordBreak: "keep-all", fontFamily: "var(--font-serif)" }}>{feature.title}</h3>
+                  <p style={{ color: "#888", fontSize: "1.1rem", lineHeight: "1.7", wordBreak: "keep-all", fontWeight: "300" }}>{feature.desc}</p>
                 </div>
               ))}
             </div>
 
             {/* Premium Slogan */}
-            <div style={{ marginTop: "20rem", marginBottom: "15rem" }}>
-              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}>
-                <h2 className="neon-text" style={{ 
-                  fontFamily: "var(--font-handwriting)", fontSize: "clamp(3.5rem, 9vw, 8rem)", 
-                  lineHeight: "1.2", marginBottom: "2.5rem", wordBreak: "keep-all", transform: "rotate(-2deg)"
+            <div style={{ marginTop: "15rem", marginBottom: "10rem" }}>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1.5 }}>
+                <h2 style={{ 
+                  fontFamily: "var(--font-handwriting)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", 
+                  lineHeight: "1.4", marginBottom: "1.5rem", wordBreak: "keep-all", color: "#fff", fontWeight: "400"
                 }}>
                   "당신의 시간은 더 <br /> 가치 있는 곳에 쓰여야 합니다."
                 </h2>
-                <p style={{ color: "#444", letterSpacing: "0.8em", fontSize: "1.1rem", fontWeight: "700" }}>AI-DRIVEN BUSINESS GROWTH</p>
+                <div style={{ width: "40px", height: "1px", background: "var(--primary)", margin: "2rem auto" }} />
+                <p style={{ color: "#555", letterSpacing: "0.5em", fontSize: "0.9rem", fontWeight: "700", fontFamily: "var(--font-serif)" }}>AI-DRIVEN BUSINESS GROWTH</p>
               </motion.div>
             </div>
           </section>
