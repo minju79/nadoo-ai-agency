@@ -2,22 +2,30 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, MapPin, Phone, FileText, Bot, Sparkles, User, Loader2, Menu, Building2, Layers } from "lucide-react";
+import { X, Bot, Loader2, Menu } from "lucide-react";
 
-// Responsive Image Column (Agency Background)
-const ImageColumn = ({ images, speed, direction = 1, mobileHidden = false }: { images: string[], speed: number, direction?: number, mobileHidden?: boolean }) => {
+// Mirrorly-inspired Diagonal Column
+const ImageColumn = ({ images, speed, direction = 1, delay = 0 }: { images: string[], speed: number, direction?: number, delay?: number }) => {
   return (
-    <div className={`video-column ${mobileHidden ? 'mobile-hidden' : ''}`} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+    <div className="video-column" style={{ 
+      display: "flex", 
+      flexDirection: "column", 
+      gap: "2.5rem",
+      flex: "0 0 380px",
+      transform: "translateZ(0)"
+    }}>
       <motion.div 
-        animate={{ y: direction > 0 ? [0, -1800] : [-1800, 0] }}
-        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
-        style={{ display: "flex", flexDirection: "column", gap: "1.5rem", willChange: "transform" }}
+        initial={{ y: 0 }}
+        animate={{ y: direction > 0 ? [0, -2000] : [-2000, 0] }}
+        transition={{ repeat: Infinity, duration: speed, ease: "linear", delay: delay }}
+        style={{ display: "flex", flexDirection: "column", gap: "2.5rem", willChange: "transform" }}
       >
         {[...images, ...images, ...images].map((src, i) => (
-          <div key={i} className="video-item" style={{ 
-            position: "relative", borderRadius: "20px", overflow: "hidden",
-            boxShadow: "0 15px 30px rgba(0,0,0,0.5)", backgroundColor: "#000",
-            border: "1px solid rgba(255,255,255,0.05)", opacity: 0.4, transform: "translateZ(0)"
+          <div key={i} style={{ 
+            position: "relative", borderRadius: "30px", overflow: "hidden",
+            boxShadow: "0 30px 60px rgba(0,0,0,0.5)", backgroundColor: "#111",
+            border: "1px solid rgba(255,255,255,0.05)", opacity: 0.6,
+            height: "550px"
           }}>
             <img src={src} alt="agency work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           </div>
@@ -35,7 +43,6 @@ export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const FORMSPREE_URL = "https://formspree.io/f/xzdoearv";
-
   const images = ["/work/agency1.jpg", "/work/agency2.jpg", "/work/agency3.jpg", "/work/agency4.jpg"];
 
   const handleChatSubmit = async (e: any) => {
@@ -58,114 +65,200 @@ export default function Home() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", background: "#050505", color: "#fff", overflowX: "hidden" }}>
+    <div style={{ position: "relative", minHeight: "100vh", background: "#050505", color: "#fff", overflow: "hidden" }}>
       
-      {/* 1. Background */}
-      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", display: "flex", justifyContent: "center", gap: "1rem", zIndex: 0, pointerEvents: "none" }}>
-        <ImageColumn images={images} speed={60} direction={1} />
-        <ImageColumn images={images} speed={90} direction={-1} mobileHidden />
+      {/* 1. DIAGONAL BACKGROUND (Mirrorly Inspired) */}
+      <div style={{ 
+        position: "fixed", 
+        top: "-20%", 
+        left: "-20%", 
+        width: "140%", 
+        height: "140%", 
+        zIndex: 0,
+        transform: "rotate(-10deg)", // THE CRITICAL TILT
+        display: "flex",
+        justifyContent: "center",
+        gap: "3rem",
+        pointerEvents: "none"
+      }}>
+        <ImageColumn images={images} speed={70} direction={1} delay={0} />
+        <ImageColumn images={images} speed={95} direction={-1} delay={1} />
+        <ImageColumn images={images} speed={65} direction={1} delay={0.5} />
+        <ImageColumn images={images} speed={110} direction={-1} delay={2} />
+        <ImageColumn images={images} speed={80} direction={1} delay={1.5} />
       </div>
-      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", background: "radial-gradient(circle at center, rgba(0,0,0,0) 0%, rgba(5,5,5,0.95) 100%)", zIndex: 1 }} />
 
-      {/* 2. Content */}
+      {/* Cinematic Overlay */}
+      <div style={{ 
+        position: "fixed", top: 0, left: 0, width: "100%", height: "100%", 
+        background: "radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(5,5,5,0.95) 100%)", 
+        zIndex: 1 
+      }} />
+
+      {/* 2. Content Layer */}
       <div style={{ position: "relative", zIndex: 10 }}>
         {/* Navigation */}
-        <nav style={{ padding: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1400px", margin: "0 auto" }}>
-          <div style={{ fontSize: "1.3rem", fontWeight: "950", fontFamily: "var(--font-serif)", letterSpacing: "0.15em" }}>
-            NADOO <span style={{ color: "var(--primary)" }}>AGENCY</span>
+        <nav style={{ padding: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1400px", margin: "0 auto" }}>
+          <div style={{ fontSize: "1.8rem", fontWeight: "950", fontFamily: "var(--font-serif)", letterSpacing: "0.2em" }}>
+            NADOO <span className="neon-text">AGENCY</span>
           </div>
-          <div className="desktop-only" style={{ display: "flex", gap: "2.5rem", alignItems: "center" }}>
-            <a style={{ fontWeight: "700" }}>SERVICES</a>
-            <a style={{ fontWeight: "700" }}>PORTFOLIO</a>
-            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "0.7rem 1.8rem" }}>CONTACT US</button>
+          <div className="desktop-only" style={{ display: "flex", gap: "3rem", alignItems: "center" }}>
+            <a href="#services" style={{ fontWeight: "700", fontSize: "1.1rem" }}>SERVICES</a>
+            <a href="#portfolio" style={{ fontWeight: "700", fontSize: "1.1rem" }}>PORTFOLIO</a>
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>CONTACT</button>
           </div>
           <button className="mobile-only" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ background: "none", border: "none", color: "var(--primary)" }}>
-            <Menu size={28} />
+            <Menu size={32} />
           </button>
         </nav>
 
-        {/* Hero */}
-        <main className="container" style={{ paddingTop: "6rem", paddingBottom: "8rem", textAlign: "center" }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        {/* Hero Section */}
+        <main className="container" style={{ paddingTop: "10rem", paddingBottom: "15rem", textAlign: "center" }}>
+          <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>
+            <span className="neon-text" style={{ 
+              fontFamily: "var(--font-handwriting)", fontSize: "clamp(1.5rem, 4vw, 2.8rem)", 
+              marginBottom: "1.5rem", display: "block", transform: "rotate(-3deg)", fontStyle: "italic"
+            }}>
+              비즈니스의 가치를 높이는 AI 솔루션
+            </span>
+            
             <h1 style={{ 
-              fontFamily: "var(--font-serif)", fontSize: "clamp(2.8rem, 8vw, 7.5rem)", 
-              fontWeight: "900", lineHeight: 1.1, marginBottom: "3rem", wordBreak: "keep-all" 
+              fontFamily: "var(--font-serif)", fontSize: "clamp(2.5rem, 8vw, 6.5rem)", 
+              fontWeight: "900", lineHeight: 1.1, marginBottom: "3rem", wordBreak: "keep-all"
             }}>
-              AI로 완성하는 <br /> <span style={{ color: "var(--primary)" }}>비즈니스 자동화</span>
+              AI로 완성하는 <br />
+              <span className="neon-text" style={{ fontStyle: "italic" }}>비즈니스 자동화</span>
             </h1>
+            
             <p style={{ 
-              fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "#aaa", maxWidth: "750px", 
-              margin: "0 auto 4rem", lineHeight: "1.6", wordBreak: "keep-all", padding: "0 1.5rem" 
+              fontSize: "clamp(1rem, 2vw, 1.3rem)", color: "#aaa", maxWidth: "850px", 
+              margin: "0 auto 5rem", lineHeight: "1.8", wordBreak: "keep-all", fontWeight: "300"
             }}>
-              단순한 도구를 넘어, 비즈니스의 성장 엔진이 됩니다. <br /> 나두 AI 에이전시의 전담 팀이 귀하의 비즈니스를 24시간 가동시켜 드립니다.
+              단순한 도구를 넘어, 비즈니스의 성장 엔진이 됩니다. <br />
+              나두 AI 에이전시의 전담 팀이 귀하의 비즈니스를 24시간 가동시켜 드립니다.
             </p>
-            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "1.4rem 3.5rem" }}>전략 컨설팅 신청</button>
+            
+            <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "1.8rem 5rem", fontSize: "1.3rem" }}>
+              전략 컨설팅 신청하기
+            </button>
           </motion.div>
 
-          {/* Solutions */}
-          <section style={{ marginTop: "10rem" }}>
-            <div className="feature-grid">
+          {/* Solutions Grid */}
+          <section id="services" style={{ marginTop: "20rem" }}>
+            <div className="feature-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "3rem" }}>
               {[
-                { title: "전담 AI 팀 구축", desc: "고객님의 비즈니스에 최적화된 AI 팀원을 배치합니다." },
-                { title: "워크플로우 최적화", desc: "불필요한 반복 업무를 AI가 대신 처리하도록 설계합니다." },
-                { title: "디지털 마케팅 자동화", desc: "콘텐츠 생성부터 배포까지 AI가 스스로 관리합니다." }
+                { title: "전담 AI 팀 구축", desc: "고객님의 비즈니스에 최적화된 AI 팀원을 배치하여 업무 효율을 극대화합니다." },
+                { title: "워크플로우 최적화", desc: "불필요한 반복 업무를 AI가 대신 처리하도록 설계하여 핵심 가치에 집중하게 합니다." },
+                { title: "디지털 마케팅 자동화", desc: "콘텐츠 생성부터 배포, 분석까지 AI가 스스로 관리하여 성과를 창출합니다." }
               ].map((feature, i) => (
-                <div key={i} className="video-card" style={{ padding: "3.5rem 2rem", textAlign: "left", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                  <div style={{ color: "var(--primary)", fontWeight: "900", fontSize: "1rem", marginBottom: "1rem" }}>SOLUTION 0{i+1}</div>
-                  <h3 style={{ fontSize: "1.8rem", fontWeight: "900", marginBottom: "1.2rem", wordBreak: "keep-all" }}>{feature.title}</h3>
-                  <p style={{ color: "#888", fontSize: "1.1rem", lineHeight: "1.7", wordBreak: "keep-all" }}>{feature.desc}</p>
+                <div key={i} className="video-card" style={{ padding: "5rem 3rem", textAlign: "left", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", backdropFilter: "blur(20px)" }}>
+                  <div style={{ color: "var(--primary)", fontWeight: "900", fontSize: "1.1rem", marginBottom: "1.5rem", letterSpacing: "0.2em" }}>SOLUTION 0{i+1}</div>
+                  <h3 style={{ fontSize: "2.2rem", fontWeight: "900", marginBottom: "1.5rem", wordBreak: "keep-all" }}>{feature.title}</h3>
+                  <p style={{ color: "#888", fontSize: "1.2rem", lineHeight: "1.8", wordBreak: "keep-all" }}>{feature.desc}</p>
                 </div>
               ))}
             </div>
 
-            {/* Slogan */}
-            <div style={{ marginTop: "12rem", marginBottom: "10rem", textAlign: "center" }}>
-              <div style={{ 
-                fontFamily: "var(--font-handwriting)", fontSize: "clamp(2.5rem, 7vw, 6.5rem)", 
-                color: "var(--primary)", marginBottom: "1.5rem", wordBreak: "keep-all", padding: "0 1.5rem", lineHeight: "1.3"
-              }}>
-                "당신의 시간은 더 <br className="mobile-only" /> 가치 있는 곳에 쓰여야 합니다."
-              </div>
-              <p style={{ color: "#444", letterSpacing: "0.5em", fontSize: "0.9rem" }}>AI-DRIVEN BUSINESS GROWTH</p>
+            {/* Premium Slogan */}
+            <div style={{ marginTop: "20rem", marginBottom: "15rem" }}>
+              <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}>
+                <h2 className="neon-text" style={{ 
+                  fontFamily: "var(--font-handwriting)", fontSize: "clamp(3.5rem, 9vw, 8rem)", 
+                  lineHeight: "1.2", marginBottom: "2.5rem", wordBreak: "keep-all", transform: "rotate(-2deg)"
+                }}>
+                  "당신의 시간은 더 <br /> 가치 있는 곳에 쓰여야 합니다."
+                </h2>
+                <p style={{ color: "#444", letterSpacing: "0.8em", fontSize: "1.1rem", fontWeight: "700" }}>AI-DRIVEN BUSINESS GROWTH</p>
+              </motion.div>
             </div>
           </section>
 
-          {/* Chatbot */}
-          <section style={{ marginTop: "5rem", marginBottom: "8rem" }}>
-            <div style={{ background: "rgba(204, 255, 0, 0.02)", padding: "4rem 1.5rem", borderRadius: "32px", border: "1px solid rgba(204, 255, 0, 0.15)", textAlign: "left", maxWidth: "800px", margin: "0 auto" }}>
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "1rem", marginBottom: "2.5rem" }}>
-                <div style={{ padding: "0.8rem", background: "var(--primary)", borderRadius: "14px" }}><Bot size={32} color="#000" /></div>
-                <div><h3 style={{ fontSize: "1.6rem", fontWeight: "950" }}>에이전시 상담봇</h3><p style={{ color: "var(--primary)", fontWeight: "800", fontSize: "0.9rem" }}>비즈니스 프로세스 자동화 문의</p></div>
+          {/* Floating Consultation Box */}
+          <section style={{ maxWidth: "900px", margin: "0 auto", background: "rgba(204, 255, 0, 0.02)", padding: "6rem 3rem", borderRadius: "50px", border: "1px solid rgba(204, 255, 0, 0.2)", textAlign: "left" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2.5rem", marginBottom: "4rem" }}>
+              <div style={{ padding: "1.5rem", background: "var(--primary)", borderRadius: "24px" }}><Bot size={50} color="#000" /></div>
+              <div>
+                <h3 style={{ fontSize: "2.8rem", fontWeight: "950" }}>나두 AI 상담봇</h3>
+                <p style={{ color: "var(--primary)", fontWeight: "800", fontSize: "1.2rem", letterSpacing: "0.1em" }}>Business Automation Expert</p>
               </div>
-              {!isChatActive && !isSuccess ? (
-                <button onClick={() => setIsChatActive(true)} className="btn-primary" style={{ width: "100%" }}>상담 신청서 작성</button>
-              ) : isSuccess ? (
-                <div style={{ background: "rgba(204, 255, 0, 0.05)", padding: "2rem", borderRadius: "20px", textAlign: "center" }}><h4>감사합니다! 곧 연락드릴게요. ✨</h4></div>
-              ) : (
-                <form onSubmit={handleChatSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" />
-                  <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" />
-                  <textarea name="message" placeholder="자동화가 필요한 업무를 적어주세요." rows={3} required className="mobile-input-fix" style={{ resize: "none" }} />
-                  <button type="submit" disabled={isSubmitting} className="btn-primary">{isSubmitting ? "전송 중..." : "프로젝트 의뢰 전송"}</button>
-                </form>
-              )}
             </div>
+            
+            <form onSubmit={handleChatSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem" }} />
+                <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem" }} />
+              </div>
+              <textarea name="message" placeholder="자동화가 필요한 업무나 궁금하신 내용을 적어주세요." rows={4} required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem", resize: "none" }} />
+              <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "1.8rem", fontSize: "1.4rem" }}>
+                {isSubmitting ? <Loader2 className="animate-spin" style={{ margin: "0 auto" }} /> : "프로젝트 의뢰 전송하기"}
+              </button>
+            </form>
           </section>
 
           {/* Footer */}
-          <footer style={{ marginTop: "8rem", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "6rem", textAlign: "left" }}>
-            <div className="neon-text" style={{ fontSize: "2.5rem", fontWeight: "950", marginBottom: "3rem", fontFamily: "var(--font-serif)" }}>NADOO_AI</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
-              <div><span style={{ fontWeight: "900", color: "var(--primary)" }}>LOCATION</span><p style={{ color: "#666", marginTop: "0.5rem" }}>광주광역시 서구 상무중앙로 7, 5층 (치평동, 상무타워)</p></div>
-              <div><span style={{ fontWeight: "900", color: "var(--primary)" }}>CONTACT</span><p style={{ color: "#666", marginTop: "0.5rem" }}>010-4892-3376 | nadoo_ai@naver.com</p></div>
-              <p style={{ color: "#444", fontSize: "0.9rem" }}>
+          <footer style={{ marginTop: "20rem", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "10rem", textAlign: "left" }}>
+            <div className="neon-text" style={{ fontSize: "4rem", fontWeight: "950", marginBottom: "5rem", fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>NADOO_AI</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "5rem" }}>
+              <div>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.3rem", letterSpacing: "0.2em" }}>LOCATION</span>
+                <p style={{ color: "#777", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
+              </div>
+              <div>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.3rem", letterSpacing: "0.2em" }}>CONTACT</span>
+                <p style={{ color: "#777", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
+              </div>
+            </div>
+            <div style={{ marginTop: "8rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
+              <p style={{ color: "#444", fontSize: "1.1rem", lineHeight: "1.8" }}>
                 상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488<br />
                 © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
               </p>
+              <div style={{ display: "flex", gap: "2rem", color: "#444" }}>
+                <a>INSTAGRAM</a>
+                <a>BLOG</a>
+                <a>YOUTUBE</a>
+              </div>
             </div>
           </footer>
         </main>
       </div>
+
+      {/* Consultation Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsModalOpen(false)} style={{ position: "absolute", width: "100%", height: "100%", background: "rgba(0,0,0,0.8)", backdropFilter: "blur(20px)" }} />
+            <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} style={{ position: "relative", background: "#0a0a0a", padding: "4rem 3rem", borderRadius: "40px", width: "100%", maxWidth: "550px", color: "#fff", textAlign: "center", border: "1px solid rgba(204, 255, 0, 0.2)", boxShadow: "0 50px 100px rgba(0,0,0,0.8)" }}>
+              <button onClick={() => setIsModalOpen(false)} style={{ position: "absolute", top: "2rem", right: "2rem", background: "none", border: "none", cursor: "pointer", color: "#666" }}><X size={32} /></button>
+              
+              {isSuccess ? (
+                <div style={{ padding: "4rem 2rem" }}>
+                  <div style={{ fontSize: "5rem", marginBottom: "2rem" }}>✨</div>
+                  <h2 style={{ fontSize: "2.5rem", fontWeight: "900", color: "var(--primary)", marginBottom: "1rem" }}>신청 완료!</h2>
+                  <p style={{ color: "#aaa", fontSize: "1.2rem" }}>전문가가 내용을 확인 후 <br /> 빠른 시일 내에 연락드리겠습니다.</p>
+                </div>
+              ) : (
+                <>
+                  <div style={{ marginBottom: "3rem" }}>
+                    <div style={{ display: "inline-block", padding: "1.5rem", background: "rgba(204, 255, 0, 0.1)", borderRadius: "24px", color: "var(--primary)", marginBottom: "2rem" }}><Bot size={40} /></div>
+                    <h2 style={{ fontSize: "2.5rem", fontWeight: "900", marginBottom: "1rem" }}>무료 전략 컨설팅</h2>
+                    <p style={{ color: "#888", fontSize: "1.1rem" }}>비즈니스 자동화의 첫 걸음, <br /> 나두 AI와 함께 설계하세요.</p>
+                  </div>
+                  
+                  <form onSubmit={handleChatSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                    <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid #222" }} />
+                    <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid #222" }} />
+                    <textarea name="message" placeholder="상담 희망 내용 (자동화 목표 등)" rows={3} required className="mobile-input-fix" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid #222", resize: "none" }} />
+                    <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ width: "100%", padding: "1.5rem", fontSize: "1.3rem", marginTop: "1rem" }}>
+                      {isSubmitting ? <Loader2 className="animate-spin" style={{ margin: "0 auto" }} /> : "컨설팅 신청하기"}
+                    </button>
+                  </form>
+                </>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
