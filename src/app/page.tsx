@@ -207,18 +207,18 @@ export default function Home() {
           }}>
             <div className="neon-text" style={{ fontSize: "3.5rem", fontWeight: "950", marginBottom: "4rem", fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>NADOO_AI</div>
             
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "6rem", marginBottom: "3rem" }}>
-              <div style={{ minWidth: "280px" }}>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1.5rem" }}>LOCATION</span>
-                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "4rem", marginBottom: "1rem" }}>
+              <div style={{ minWidth: "250px" }}>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1rem" }}>LOCATION</span>
+                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.6" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
               </div>
-              <div style={{ minWidth: "280px" }}>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1.5rem" }}>CONTACT</span>
-                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo3379@gmail.com</p>
+              <div style={{ minWidth: "250px" }}>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.2rem", letterSpacing: "0.2em", display: "block", marginBottom: "1rem" }}>CONTACT</span>
+                <p style={{ color: "#ddd", fontSize: "1.1rem", lineHeight: "1.6" }}>010-4892-3376 <br /> nadoo3379@gmail.com</p>
               </div>
             </div>
 
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "3rem", paddingBottom: "6rem" }}>
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", paddingBottom: "4rem" }}>
               <div>
                 <p style={{ color: "#888", fontSize: "1rem", lineHeight: "1.8" }}>
                   상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488
