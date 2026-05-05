@@ -92,6 +92,34 @@ body {
   background: rgba(255,255,255,0.08);
 }
 
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
 @media (max-width: 1200px) {
   .feature-grid { grid-template-columns: 1fr; }
   .video-column { width: 320px; }

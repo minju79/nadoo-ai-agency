@@ -103,8 +103,8 @@ export default function Home() {
             NADOO <span className="neon-text">AGENCY</span>
           </div>
           <div className="desktop-only" style={{ display: "flex", gap: "3rem", alignItems: "center" }}>
-            <a href="#services" style={{ fontWeight: "700", fontSize: "1.1rem" }}>SERVICES</a>
-            <a href="#portfolio" style={{ fontWeight: "700", fontSize: "1.1rem" }}>PORTFOLIO</a>
+            <a href="#services" className="nav-link">SERVICES</a>
+            <a href="#portfolio" className="nav-link">PORTFOLIO</a>
             <button onClick={() => setIsModalOpen(true)} className="btn-primary" style={{ padding: "0.8rem 2.5rem" }}>CONTACT</button>
           </div>
           <button className="mobile-only" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ background: "none", border: "none", color: "var(--primary)" }}>
@@ -163,61 +163,62 @@ export default function Home() {
             <div style={{ marginTop: "15rem", marginBottom: "10rem" }}>
               <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1.5 }}>
                 <h2 style={{ 
-                  fontFamily: "var(--font-handwriting)", fontSize: "clamp(2.5rem, 6vw, 4.5rem)", 
-                  lineHeight: "1.4", marginBottom: "1.5rem", wordBreak: "keep-all", color: "#fff", fontWeight: "400"
+                  fontFamily: "var(--font-handwriting)", fontSize: "clamp(3rem, 7vw, 5rem)", 
+                  lineHeight: "1.4", marginBottom: "1.5rem", wordBreak: "keep-all", color: "#ffffff", fontWeight: "400",
+                  textShadow: "0 0 20px rgba(255,255,255,0.2)"
                 }}>
                   "당신의 시간은 더 <br /> 가치 있는 곳에 쓰여야 합니다."
                 </h2>
-                <div style={{ width: "40px", height: "1px", background: "var(--primary)", margin: "2rem auto" }} />
-                <p style={{ color: "#555", letterSpacing: "0.5em", fontSize: "0.9rem", fontWeight: "700", fontFamily: "var(--font-serif)" }}>AI-DRIVEN BUSINESS GROWTH</p>
+                <div style={{ width: "60px", height: "2px", background: "var(--primary)", margin: "2.5rem auto" }} />
+                <p style={{ color: "#888", letterSpacing: "0.6em", fontSize: "1rem", fontWeight: "800", fontFamily: "var(--font-serif)" }}>AI-DRIVEN BUSINESS GROWTH</p>
               </motion.div>
             </div>
           </section>
 
           {/* Floating Consultation Box */}
-          <section style={{ maxWidth: "900px", margin: "0 auto", background: "rgba(204, 255, 0, 0.02)", padding: "6rem 3rem", borderRadius: "50px", border: "1px solid rgba(204, 255, 0, 0.2)", textAlign: "left" }}>
+          <section style={{ maxWidth: "950px", margin: "0 auto", background: "rgba(255, 255, 255, 0.03)", padding: "6rem 3rem", borderRadius: "60px", border: "1px solid rgba(204, 255, 0, 0.3)", textAlign: "left", backdropFilter: "blur(30px)" }}>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2.5rem", marginBottom: "4rem" }}>
-              <div style={{ padding: "1.5rem", background: "var(--primary)", borderRadius: "24px" }}><Bot size={50} color="#000" /></div>
+              <div style={{ padding: "1.5rem", background: "var(--primary)", borderRadius: "24px", boxShadow: "0 10px 30px rgba(204, 255, 0, 0.3)" }}><Bot size={50} color="#000" /></div>
               <div>
-                <h3 style={{ fontSize: "2.8rem", fontWeight: "950" }}>나두 AI 상담봇</h3>
-                <p style={{ color: "var(--primary)", fontWeight: "800", fontSize: "1.2rem", letterSpacing: "0.1em" }}>Business Automation Expert</p>
+                <h3 style={{ fontSize: "2.8rem", fontWeight: "950", color: "#fff" }}>나두 AI 상담봇</h3>
+                <p style={{ color: "var(--primary)", fontWeight: "800", fontSize: "1.3rem", letterSpacing: "0.1em" }}>Business Automation Expert</p>
               </div>
             </div>
             
             <form onSubmit={handleChatSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
-                <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem" }} />
-                <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem" }} />
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+                <input name="name" type="text" placeholder="성함/기업명" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }} />
+                <input name="phone" type="tel" placeholder="연락처" required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }} />
               </div>
-              <textarea name="message" placeholder="자동화가 필요한 업무나 궁금하신 내용을 적어주세요." rows={4} required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem", resize: "none" }} />
-              <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "1.8rem", fontSize: "1.4rem" }}>
+              <textarea name="message" placeholder="자동화가 필요한 업무나 궁금하신 내용을 적어주세요." rows={4} required className="mobile-input-fix" style={{ fontSize: "1.2rem", padding: "1.8rem", resize: "none", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }} />
+              <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "2rem", fontSize: "1.4rem" }}>
                 {isSubmitting ? <Loader2 className="animate-spin" style={{ margin: "0 auto" }} /> : "프로젝트 의뢰 전송하기"}
               </button>
             </form>
           </section>
 
           {/* Footer */}
-          <footer style={{ marginTop: "20rem", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "10rem", textAlign: "left" }}>
+          <footer style={{ marginTop: "20rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "10rem", textAlign: "left" }}>
             <div className="neon-text" style={{ fontSize: "4rem", fontWeight: "950", marginBottom: "5rem", fontFamily: "var(--font-serif)", letterSpacing: "0.1em" }}>NADOO_AI</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))", gap: "5rem" }}>
               <div>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.3rem", letterSpacing: "0.2em" }}>LOCATION</span>
-                <p style={{ color: "#777", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.4rem", letterSpacing: "0.2em" }}>LOCATION</span>
+                <p style={{ color: "#aaa", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>광주광역시 서구 상무중앙로 7, 5층 <br />(치평동, 상무타워)</p>
               </div>
               <div>
-                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.3rem", letterSpacing: "0.2em" }}>CONTACT</span>
-                <p style={{ color: "#777", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
+                <span style={{ fontWeight: "900", color: "var(--primary)", fontSize: "1.4rem", letterSpacing: "0.2em" }}>CONTACT</span>
+                <p style={{ color: "#aaa", marginTop: "2rem", fontSize: "1.2rem", lineHeight: "1.8" }}>010-4892-3376 <br /> nadoo_ai@naver.com</p>
               </div>
             </div>
-            <div style={{ marginTop: "8rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem" }}>
-              <p style={{ color: "#444", fontSize: "1.1rem", lineHeight: "1.8" }}>
+            <div style={{ marginTop: "8rem", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "2rem", paddingBottom: "5rem" }}>
+              <p style={{ color: "#666", fontSize: "1.1rem", lineHeight: "1.8" }}>
                 상호: 나두에이아이 | 대표자: 오민주 | 사업자번호: 434-40-01488<br />
                 © 2026 NADOO AI AGENCY. ALL RIGHTS RESERVED.
               </p>
-              <div style={{ display: "flex", gap: "2rem", color: "#444" }}>
-                <a>INSTAGRAM</a>
-                <a>BLOG</a>
-                <a>YOUTUBE</a>
+              <div style={{ display: "flex", gap: "2.5rem", color: "#888", fontWeight: "700" }}>
+                <a className="nav-link" style={{ fontSize: "1rem" }}>INSTAGRAM</a>
+                <a className="nav-link" style={{ fontSize: "1rem" }}>BLOG</a>
+                <a className="nav-link" style={{ fontSize: "1rem" }}>YOUTUBE</a>
               </div>
             </div>
           </footer>
